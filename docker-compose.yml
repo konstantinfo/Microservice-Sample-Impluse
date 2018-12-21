@@ -1,0 +1,43 @@
+version: '3'
+services:
+    hello:
+        build: ./hello
+        volumes:
+            - ./hello/src:/app/
+        working_dir: /app/
+        command: bash -c "npm install && npm start"
+        ports:
+          - "17000:15000"
+        image: hello
+    hello-slug:
+        build: ./hello-slug
+        volumes:
+            - ./hello-slug/src:/app/
+        working_dir: /app/
+        command: bash -c "npm install && npm start"
+        ports:
+            - "17001:15001"
+        image: hello-slug
+    post:
+        build: ./post
+        volumes:
+            - ./post/src:/app/
+        working_dir: /app/
+        command: bash -c "npm install && npm start"
+        ports:
+            - "17002:15002"
+        image: post
+    swagger-editor:
+        image: swaggerapi/swagger-editor
+        container_name: "swagger-editor"
+        ports:
+          - "17003:8080"
+    swagger-ui:
+        image: swaggerapi/swagger-ui
+        container_name: "swagger-ui"
+        ports:
+          - "17004:8080"
+        volumes:
+          - ./swagger/hello.json:/hello.json
+          - ./swagger/hello_slug.json:/hello_slug.json
+          - ./swagger/post.json:/post.json
